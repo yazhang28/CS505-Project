@@ -19,6 +19,9 @@ def predictAmountCrimes(district, type_crime, user_day):
         else:
             crime += i
 
+    type_crime = crime
+    print(type_crime)
+
     user_day = int(user_day)
     df = pd.read_csv('cleaned_crime_data.csv')
     
@@ -61,6 +64,22 @@ def predictAmountCrimes(district, type_crime, user_day):
 
 
 def predictProbabilityOfCrime(district, type_crime, user_day):
+
+    crime = ""
+
+    for i in type_crime:
+        if i == ".":
+            crime += "/"
+        elif i == "_":
+            crime += " "
+        else:
+            crime += i
+
+    type_crime = crime
+    print(type_crime)
+
+    user_day = int(user_day)
+    
     # flag to avoid Perfect Seperation error (when all is_crime is either 0 or 1)
     not_available = True
 
