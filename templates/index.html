@@ -54,7 +54,7 @@
 		map._initPathRoot()    
 	</script>
 
-	<h2>Information on Crimes</h2>
+	<h2>Predicted Amount of Crimes</h2>
 	<form>
 	<label>District: </label>
 		<select id="district" name="district" required>
@@ -76,14 +76,12 @@
 		<select id="crime" name="crime" required>
 		<option value="Larceny">Larceny</option>
 		<option value="Manslaughter">Manslaughter</option>
-		<option value="Drving_Under_the_Influence">Driving Under the Influence</option>
 		<option value="Rape.Sexual_Assault">Rape/Sexual Assault</option>
 		<option value="Assault.Battery">Assault/Battery</option>
 		<option value="Kidnapping">Kidnapping</option>
 		<option value="Burglary">Burglary</option>
 		<option value="Bombs.Explosives">Bombs/Explosives</option>
 		<option value="Harassment">Harassment</option>
-		<option value="Drugs">Drugs (selling)</option>
 		<option value="Weapons">Weapons</option>
 		<option value="Arson">Arson</option>
 		<option value="Breaking_and_Entering">Breaking and Entering</option>
@@ -109,7 +107,7 @@
 
 
 
-	<div id="chart"></div>
+	<div id="chart1"></div>
 
 	<script type="text/javascript">
 
@@ -125,7 +123,8 @@
 			        }
 			        // or
 			        //width: 100 // this makes bar width 100px
-			    }
+			    },
+			    bindto: '#chart1'
 			});
 
 		function postPrediction() {
@@ -148,6 +147,99 @@
 
 		}
 		
+
+	</script>
+
+	<h2>Predicted Probability of Crimes</h2>
+	<form>
+	<label>District: </label>
+		<select id="district2" name="district2" required>
+		<option value="A1">Downtown</option>
+		<option value="A15">Charleston</option>
+		<option value="A7">East Boston</option>
+		<option value="B2">Roxbury</option>
+		<option value="B3">Mattapan</option>
+		<option value="C6">South Boston</option>
+		<option value="C11">Dorchester</option>
+		<option value="D4">South End</option>
+		<option value="D14">Brighton</option>
+		<option value="E5">West Roxbury</option>
+		<option value="E13">Jamaica Plain</option>
+		<option value="E18">Hyde Park</option>
+		</select>
+	</br>
+	<label>Type of Crime: </label>
+		<select id="crime2" name="crime2" required>
+		<option value="Larceny">Larceny</option>
+		<option value="Manslaughter">Manslaughter</option>
+		<option value="Rape.Sexual_Assault">Rape/Sexual Assault</option>
+		<option value="Assault.Battery">Assault/Battery</option>
+		<option value="Kidnapping">Kidnapping</option>
+		<option value="Burglary">Burglary</option>
+		<option value="Bombs.Explosives">Bombs/Explosives</option>
+		<option value="Harassment">Harassment</option>
+		<option value="Weapons">Weapons</option>
+		<option value="Arson">Arson</option>
+		<option value="Breaking_and_Entering">Breaking and Entering</option>
+		<option value="Child_Abuse.Endangerment">Child Abuse/Endangerment</option>
+		<option value="Disorderly_Conduct">Disorderly Conduct</option>
+		<option value="Public_Drinking">Public Drinking</option>
+		</select>
+	</br>
+	<label>Day of Week: </label>
+		<select id="day2" name="day2" required>
+		<option value="1">Sunday</option>
+		<option value="2">Monday</option>
+		<option value="3">Tuesday</option>
+		<option value="4">Wednesday</option>
+		<option value="5">Thursday</option>
+		<option value="6">Friday</option>
+		<option value="7">Saturday</option>
+		</select>
+
+	<input type="button" value="Submit" id="submit" onClick="postProbability()">
+
+	</form>
+
+	<div id="chart2"></div>
+
+	<script type="text/javascript">
+		var chart2 = c3.generate({
+		    data: {
+		        columns: [
+		        ],
+			        type: 'bar'
+			    },
+			    bar: {
+			        width: {
+			            ratio: 0.5 // this makes bar width 50% of length between ticks
+			        }
+			        // or
+			        //width: 100 // this makes bar width 100px
+			    },
+			    bindto: '#chart2'
+			});
+
+
+		function postProbability() {
+			var http = new XMLHttpRequest();
+		    var url = "http://localhost:5000/get_probability/" + document.getElementById("district2").value + "/" + document.getElementById("crime2").value + "/" + document.getElementById("day2").value;
+		    http.open("GET", url, true);
+		    http.setRequestHeader("Content-type", "application/json");
+		    http.onreadystatechange = function() {
+		      if (http.readyState == 4 && http.status == 200) {
+		      	var data = JSON.parse(http.responseText).results;
+		      	chart2.load({
+				    columns: [
+				        data
+				    ]
+				});
+		        console.log(data);
+		      }
+		    }
+		    http.send();
+
+		}
 
 	</script>
 
