@@ -2,6 +2,7 @@ import jsonschema
 from flask import Flask, jsonify, abort, make_response, request, render_template
 from flask.ext.httpauth import HTTPBasicAuth
 from regression import predictAmountCrimes
+from regression import predictProbabilityOfCrime
 
 app = Flask(__name__)
 auth = HTTPBasicAuth()
@@ -12,7 +13,6 @@ def index():
 
 @app.route('/get_prediction/<district>/<type_crime>/<day>', methods=["GET"])
 def get_prediction(district, type_crime, day):
-	print(type_crime)
 	predictions = predictAmountCrimes(district, type_crime, day)
 	return jsonify({'results': predictions})
 
