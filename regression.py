@@ -42,7 +42,6 @@ def predictAmountCrimes(district, type_crime, user_day):
             for ind, row in df_by_day_hour.iterrows():
                 if row['offense_type'] == type_crime:
                     count += 1
-            if count != 0:
                 relation_list.append({'hour': hour, 'day': DAY_MAP[day],'total_crimes': count})
     
     # convert to a dataframe to do linear regression as a predictor for total occurences of that crime
