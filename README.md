@@ -11,4 +11,4 @@ In our project we analyze the types of crime that occur in given locations aroun
 
 `regression.py` performs Linear and Logistic Regression on the data points.  `clustering_script.ipynb` clusters and categorizes the data points.
 
-`service.py` is our prototype web-service that visualizes the results obtained from the algorithm scripts.
+`service.py` is our web-service prototype that visualizes the results obtained from the algorithm scripts.
